@@ -27,6 +27,26 @@ app.get("/keiyo_add", (req, res) => {
   res.redirect('/keiyo');
 });
 
+let game = [
+  { id:1, title:"Apex Legends", genre:"バトルロイヤル", platform:"PC"},
+  { id:2, title:"VALORANT", genre:"FPS", platform:"PC"},
+  { id:3, title:"スプラトゥーン3", genre:"TPS", platform:"Nintendo Switch"},
+];
+
+app.get("/game", (req, res) => {
+  res.render('game', { data: game });
+});
+
+app.get("/game_add", (req, res) => {
+  let id = req.query.id;
+  let title = req.query.title;
+  let genre = req.query.genre;
+  let platform = req.query.platform;
+  let newdata = { id: id, title: title, genre: genre, platform: platform };
+  game.push( newdata );
+  res.redirect('/game');
+});
+
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
   const message2 = "Bon jour";

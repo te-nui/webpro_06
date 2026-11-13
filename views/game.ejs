@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>好きなゲーム</title>
+</head>
+<body>
+  <h2>好きなゲームの一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>ジャンル</th>
+        <th>機種</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for( let row of data ) { %>
+        <tr>
+          <td><%= row.id %></td>
+          <td><%= row.title %></td>
+          <td><%= row.genre %></td>
+          <td><%= row.platform %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <p><a href="/public/game_add.html">ゲームを追加する</a></p>
+</body>
+</html>
