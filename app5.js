@@ -18,12 +18,13 @@ app.get("/keiyo", (req, res) => {
   res.render('db3', { data: station });
 });
 
-app.get("/keiyo", (req, res) => {
+app.get("/keiyo_add", (req, res) => {
   let id = req.query.id;
   let code = req.query.code;
   let name = req.query.name;
   let newdata = { id: id, code: code, name: name };
   station.push( newdata );
+  res.redirect('/keiyo');
 });
 
 app.get("/hello1", (req, res) => {
