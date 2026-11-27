@@ -87,6 +87,11 @@ app.post("/keiyo2/update/:number", (req, res) => {
   res.redirect('/keiyo2' );
 });
 
+// Delete（駅を消す）
+app.get("/keiyo2/delete/:number", (req, res) => {
+  station2.splice( req.params.number, 1 );
+  res.redirect('/keiyo2' );
+});
 
 
 let game = [
