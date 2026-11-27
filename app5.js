@@ -3,6 +3,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: true }));
 
 let station = [
   { id:1, code:"JE01", name:"東京駅"},
@@ -44,11 +45,46 @@ app.get("/keiyo2", (req, res) => {
   res.render('keiyo2', {data: station2} );
 });
 
+app.get("/keiyo2/create", (req, res) => {
+  res.redirect('/public/keiyo2_new.html');
+});
+
 app.get("/keiyo2/:number", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   const number = req.params.number;
   const detail = station2[ number ];
-  res.render('keiyo2_detail', {data: detail} );
+  res.render('keiyo2_detail', {id: number, data: detail} );
+});
+
+// Create（フォームから送られた駅を登録する）
+app.post("/keiyo2", (req, res) => {
+  const id = station2.length + 1;
+  const code = req.body.code;
+  const name = req.body.name;
+  const change = req.body.change;
+  const passengers = req.body.passengers;
+  const distance = req.body.distance;
+  station2.push( { id: id, code: code, name: name, change: change, passengers: passengers, distance: distance } );
+  console.log( station2 );
+  res.render('keiyo2', {data: station2} );
+});
+
+// Edit（編集画面を開く）
+app.get("/keiyo2/edit/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = station2[ number ];
+  res.render('keiyo2_edit', {id: number, data: detail} );
+});
+
+// Update（編集画面から送られた内容で書き換える）
+app.post("/keiyo2/update/:number", (req, res) => {
+  station2[req.params.number].code = req.body.code;
+  station2[req.params.number].name = req.body.name;
+  station2[req.params.number].change = req.body.change;
+  station2[req.params.number].passengers = req.body.passengers;
+  station2[req.params.number].distance = req.body.distance;
+  console.log( station2 );
+  res.redirect('/keiyo2' );
 });
 
 
